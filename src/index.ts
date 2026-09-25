@@ -11,6 +11,9 @@ type AttachmentAccumulator = {
 export default {
 	async email(message: ForwardableEmailMessage, env: Env, ctx: ExecutionContext): Promise<void> {
 		try {
+			// メールの転送
+			message.forward(env.FORWARD_TO_EMAIL)
+
 			// メールの解析
 			const parser = new PostalMime();
 			const rawEmail = await new Response(message.raw).arrayBuffer();
